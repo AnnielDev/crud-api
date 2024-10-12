@@ -7,7 +7,6 @@ const getUsers = (req: Request, res: Response) => {
 
 const createUser = async (req: Request, res: Response) => {
   try {
-    console.log(req.body);
     const { data } = req.body;
     let create = new User();
 
