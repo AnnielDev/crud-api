@@ -75,7 +75,7 @@ const deleteUser = async (req: Request, res: Response) => {
      // id,
       //{ $isDeleted: true, isActive: false },
      // { new: true }
-   // );
+    //);
 
     const user: IUser | null = await User.findByIdAndDelete(id)
 
