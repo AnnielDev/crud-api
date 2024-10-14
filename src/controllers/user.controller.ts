@@ -7,7 +7,7 @@ const getUsers = async (req: Request, res: Response) => {
     if (users) {
       res.status(200).json({
         ok: true,
-        data: users,
+        users,
         message: "Users successfully obtained",
       });
     }
