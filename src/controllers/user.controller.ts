@@ -26,7 +26,7 @@ const createUser = async (req: Request, res: Response) => {
     if (user) {
       res.status(401).send({
         ok: false,
-        message: "This user already exists",
+        message: "This user already exists!",
       });
       return;
     }
@@ -48,10 +48,12 @@ const updateUser = async (req: Request, res: Response) => {
     const { id } = req.params;
     const { data } = req.body;
 
-    const updatedUser: IUser | null = await User.findByIdAndUpdate(id, data, { new: true });
+    const updatedUser: IUser | null = await User.findByIdAndUpdate(id, data, {
+      new: true,
+    });
 
     if (!updatedUser) {
-       res.status(404).json({
+      res.status(404).json({
         ok: false,
         message: "User not found",
       });
@@ -72,12 +74,12 @@ const deleteUser = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     //const user: IUser | null = await User.findByIdAndUpdate(
-     // id,
-      //{ $isDeleted: true, isActive: false },
-     // { new: true }
+    // id,
+    //{ $isDeleted: true, isActive: false },
+    // { new: true }
     //);
 
-    const user: IUser | null = await User.findByIdAndDelete(id)
+    const user: IUser | null = await User.findByIdAndDelete(id);
 
     res.status(200).send({
       ok: true,
@@ -89,4 +91,46 @@ const deleteUser = async (req: Request, res: Response) => {
   }
 };
 
-export { getUsers, createUser, updateUser, deleteUser };
+const loginUser = async (req: Request, res: Response) => {
+  try {
+    const { email, password } = req.body;
+
+    const user: IUser | null = await User.findOne({ email });
+
+    if (!user) {
+      res.status(401).json({
+        ok: false,
+        message: "Wrong Credentials!",
+      });
+      return;
+    }
+
+    const isPasswordValid = user.password === password;
+
+    if (!isPasswordValid) {
+      res.status(401).json({
+        ok: false,
+        message: "Wrong Credentials!",
+      });
+      return;
+    }
+
+    res.status(200).json({
+      ok: true,
+      user: {
+        _id: user.id,
+        email: user.email,
+        username: user.username,
+        name: user.name,
+        age: user.age,
+        gender: user.gender,
+        lastname: user.lastname,
+      },
+      message: "Login successfully!",
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Ups! Something went wrong", error });
+  }
+};
+
+export { getUsers, createUser, updateUser, deleteUser, loginUser };
