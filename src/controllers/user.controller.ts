@@ -114,18 +114,10 @@ const loginUser = async (req: Request, res: Response) => {
       });
       return;
     }
-
+    const { password: userPassword, ...userData } = user.toObject();
     res.status(200).json({
       ok: true,
-      user: {
-        _id: user.id,
-        email: user.email,
-        username: user.username,
-        name: user.name,
-        age: user.age,
-        gender: user.gender,
-        lastname: user.lastname,
-      },
+      user: userData,
       message: "Login successfully!",
     });
   } catch (error) {
