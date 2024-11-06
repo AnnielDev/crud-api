@@ -24,7 +24,7 @@ const createUser = async (req: Request, res: Response) => {
     const user = await User.findOne({ email: data.email });
 
     if (user) {
-      res.status(401).send({
+      res.status(409).send({
         ok: false,
         message: "This user already exists!",
       });
@@ -36,7 +36,7 @@ const createUser = async (req: Request, res: Response) => {
     res.status(200).send({
       ok: true,
       create,
-      message: "User created successfully",
+      message: "User created successfully!",
     });
   } catch (error) {
     res.status(500).json({ message: "Ups! Something went wrong", error });
