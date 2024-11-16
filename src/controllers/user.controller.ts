@@ -5,9 +5,14 @@ const getUsers = async (req: Request, res: Response) => {
   try {
     const users: IUser[] = await User.find();
     if (users) {
+      const usersWithoutPassword = users.map((user) => {
+        const { password, ...userWithoutPassword } = user.toObject();
+        return userWithoutPassword;
+      });
+
       res.status(200).json({
         ok: true,
-        users,
+        users: usersWithoutPassword,
         message: "Users successfully obtained",
       });
     }
