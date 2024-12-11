@@ -6,7 +6,7 @@ import routes from "./routes";
 dotenv.config();
 
 const app: express.Application = express();
-const urlList = ["http://localhost:5173"];
+const urlList = ["http://localhost:5173", "https://afrj-crud-operations.netlify.app"];
 const corsOptions: CorsOptions = {
   origin: function (origin, callback) {
     if (origin && urlList.indexOf(origin) !== -1) {
