@@ -7,8 +7,8 @@ const router: express.Router = express.Router();
 router.get("/getUsers", User.getUsers);
 
 //POST
-router.post("/createUser", User.createUser);
 router.post("/loginUser", User.loginUser);
+router.post("/createUser", User.createUser);
 
 //PUT
 router.put("/updateUser/:id", User.updateUser);
